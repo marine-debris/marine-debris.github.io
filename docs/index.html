@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="shortcut icon" href="favicon.ico" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+body {
+  margin: 0;
+  font-family: "Georgia";
+}
+
+/* Style the header */
+.header {
+  background-color: white;
+  color: black;
+  position:absolute;
+  top:20px;
+  left:605px;
+  text-align: center;
+  font-size: 22px;
+  line-height: 0.1;
+}
+
+.header2 {
+  width: 708px;
+  position:absolute;
+  background-color: white;
+  top:425px;
+  left:350px;
+  color: black;
+  margin: auto;
+  text-align: center;
+  font-size: 17px;
+}
+
+.ntua {
+  display: flex;
+  position:absolute;
+  top:50px;
+  left:975px;
+  border:0;
+}
+
+.uoa {
+  display: flex;
+  position:absolute;
+  top:50px;
+  left:1185px;
+  border:0;
+}
+
+.marida {
+  display: flex;
+  position:absolute;
+  top:15px;
+  left:0px;
+  border:0;
+}
+
+.topnav {
+  position: absolute;
+  overflow: hidden;
+  background-color: #27aae2;
+  width: 250px;
+  top:205px;
+}
+
+.topnav a {
+  float: left;
+  text-align: left;
+  color: white;
+  padding: 10px  20px;
+  text-decoration: none;
+  font-size: 17px;
+
+}
+
+.topnav a:hover {
+  background-color: white;
+  color: black;
+}
+
+.address {
+  clear:left;
+  height:25px;
+  margin-top:20px;
+  margin-right:20px;
+  margin-bottom:20px;
+  margin-left:20px;
+  position:absolute;
+  top:530px;
+ }
+ 
+ .kikaki-div {
+  width: 718px;
+  height: 219px;
+  border: 0;
+  display: flex;
+  align-items: right;
+  text-align: center;
+  position:absolute;
+  top:210px;
+  left:345px;
+}
+.button {
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.button {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #27aae2;
+}
+
+.button:hover {
+  background-color: #27aae2;
+  color: white;
+
+}
+.code-button {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: right;
+  text-align: center;
+  position:absolute;
+  top:230px;
+  left:1150px;
+}
+.button1 {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;}
+}
+
+
+</style>
+
+</head>
+<body>
+<!-- ntua -->
+<div class="ntua">
+<img id="ntua" src="ntua.png" width="187.5" height="65"/>
+</div>
+
+<!-- uoa -->
+<div class="uoa">
+<img id="uoa" src="uoa.png" width="177" height="68"/>
+</div>
+
+<div class="header2">
+<h4>Kikaki, Katerina, Kakogeorgiou, Ioannis, Mikeli, Paraskevi, Raitsos, Dionysios, & Karantzalos, Konstantinos. (2021). MARIDA: Marine Debris Archive (1.0.0) [Data set]. Zenodo. <a href="https://doi.org/10.5281/zenodo.5151941"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.5151941.svg" alt="DOI"></a></h4>
+</div>
+
+<!-- marida -->
+<div class="marida">
+<img id="marida" src="marida.jpg" width="410" height="150"/>
+</div>
+
+<!-- Image -->
+<div class="kikaki-div">
+<img id="graph" src="graph.PNG" width="718" height="219"/>
+</div>
+<!-- Git-hub code -->
+<div class="code-button">
+<button class="button button1" onclick="location.href='https://github.com/marine-debris/marine-debris.github.io'" type="button">Quick Start Guide</a></button>
+</div>
+<!-- Navigation menu -->
+<div class="topnav">
+  <div class="topnav-right">
+	<a href="Report_1_Map.html">Marine Archive Dataset Overview</a>
+	<a href="Report_2_EDA.html">Categories, Confidence level & Report Analysis</a>
+	<a href="Report_3_Signatures.html">Spectral Signatures Analysis</a>
+	<a href="Report_4_Embedding.html">Spectral Signatures Embedding (2D maps)</a>
+	<a href="Report_5_Patches_stats.html">Patch Statistics & Train/Val/Test Distribution</a>
+  </div>
+</div>
+ <!-- Email address -->
+ <div class="address">
+Corresponding author Aikaterini Kikaki at <a href="mailto:akikakh@centra.ntua.gr">akikakh@central.ntua.gr</a>.
+</div>
+
+</body>
+</html>
