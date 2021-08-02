@@ -116,6 +116,7 @@ Note that this is not required for the Unet training. This procedure lasts appro
 python utils/spectral_extraction.py
 ```
 
+Alternatively, you can download the `dataset.h5` file from [here](https://pithos.okeanos.grnet.gr/public/sbT8ASX0HINAdx4tmKCg27) and put it in the `data` folder.
 Finally, in order to load the `dataset.h5` with Pandas, run in a python cell the following:
 
 ```python
@@ -230,7 +231,9 @@ Similarly, in order to produce the `dataset_glcm.h5` run:
 python utils/spectral_extraction.py --type texture
 ```
 
- 
+ Alternatively, you can download the `indices/` and `texture/` folders as well as the `dataset_si.h5` and `dataset_glcm.h5` files from [here](https://pithos.okeanos.grnet.gr/public/7Xm6x2uSBHTknNv7vaqgS6). 
+Then, you should put these items in the `data` folder.
+
 **Random Forest training and evaluation**
 
 For training in "train" set and final evaluation in "test" set, run the following commands.
