@@ -55,7 +55,6 @@ dependencies:
   - libdeflate=1.7=h2bbff1b_5
   - libgdal=2.3.3=h10f50ba_0
   - libiconv=1.16=he774522_0
-  - libkml=1.3.0=h9859afa_1013
   - libnetcdf=4.6.1=h411e497_2
   - libpng=1.6.37=h2a8f88b_0
   - libpq=11.5=hb0bdaea_2
