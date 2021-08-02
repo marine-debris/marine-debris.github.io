@@ -199,6 +199,9 @@ python evaluation.py
 In order to easily visualize the predicted masks via [QGIS](https://qgis.org/en/site/index.html),
 you can use the `utils/qgis_color_mask_mapping.qml` file.
 
+To download the pretrained Unet model on MARIDA press [here](https://pithos.okeanos.grnet.gr/public/lxh8hL4zvuSKds2BdVnMd2). 
+Then, you should put these items in the `semantic_segmentation/unet/trained_models/` folder.
+
 #### Random Forest
 
 In our baseline setup we trained a random forest classifier on Spectral Signatures,
@@ -286,6 +289,9 @@ set in `data/predicted_labels_mapping.txt`:
 ```bash
 python evaluation.py
 ```
+
+To download the pretrained ResNet model on MARIDA press [here](https://pithos.okeanos.grnet.gr/public/lxh8hL4zvuSKds2BdVnMd2). 
+Then, you should put these items in the `multi-label/resnet/trained_models/` folder.
 
 ## Talks and Papers
 [Kikaki A, Kakogeorgiou I, Mikeli P, Raitsos DE, Karantzalos K. Detecting and Classifying Marine Plastic Debris from high-resolution multispectral satellite data.](https://doi.org/10.5194/egusphere-egu21-15243)
