@@ -1,6 +1,6 @@
 ![Marine Debris Archive Logo](./docs/marida_2.jpg)
 
-MARine Debris Archive (MARIDA) is a marine debris-oriented dataset on Sentinel-2 satellite images. 
+Marine Debris Archive (MARIDA) is a marine debris-oriented dataset on Sentinel-2 satellite images. 
 It also includes various sea features that co-exist.
 MARIDA is primarily focused on the weakly supervised pixel-level semantic segmentation task.
 This repository hosts the basic tools for the extraction of spectral signatures
