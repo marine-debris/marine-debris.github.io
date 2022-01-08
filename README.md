@@ -296,7 +296,7 @@ python evaluation.py
 To download the pretrained ResNet model on MARIDA press [here](https://pithos.okeanos.grnet.gr/public/lxh8hL4zvuSKds2BdVnMd2). 
 Then, you should put these items in the `multi-label/resnet/trained_models/` folder.
 
-## Talks and Papers
+## Presentations
 [Kikaki A, Kakogeorgiou I, Mikeli P, Raitsos DE, Karantzalos K. Detecting and Classifying Marine Plastic Debris from high-resolution multispectral satellite data.](https://doi.org/10.5194/egusphere-egu21-15243)
 
 ## License
