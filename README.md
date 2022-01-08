@@ -5,8 +5,11 @@ It also includes various sea features that co-exist.
 MARIDA is primarily focused on the weakly supervised pixel-level semantic segmentation task.
 This repository hosts the basic tools for the extraction of spectral signatures
  as well as the code for the reproduction of the baseline models.
+ 
+Publication:
+ > Kikaki K, Kakogeorgiou I, Mikeli P, Raitsos DE, Karantzalos K (2022) MARIDA: A benchmark for Marine Debris detection from Sentinel-2 remote sensing data. PLoS ONE 17(1): e0262247. https://doi.org/10.1371/journal.pone.0262247
 
-In order to download MARIDA go to [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5151941.svg)](https://doi.org/10.5281/zenodo.5151941).
+In order to download MARIDA go to https://doi.org/10.5281/zenodo.5151941.
 
 ## Contents
 
