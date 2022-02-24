@@ -3,7 +3,7 @@
 Author: Ioannis Kakogeorgiou
 Email: gkakogeorgiou@gmail.com
 Python Version: 3.7.10
-Description: spectral_extraction.py extraction of the spectral signature, indices or texture features
+Description: spectral_extraction.py extraction of the spectral signature, indices, texture or spatial features
              in a hdf5 table format for analysis and for the pixel-level semantic segmentation with 
              random forest classifier.
 '''
@@ -21,7 +21,7 @@ from os.path import dirname as up
 root_path = up(up(os.path.abspath(__file__)))
 
 sys.path.append(os.path.join(root_path, 'utils'))
-from assets import s2_mapping, cat_mapping, conf_mapping, indexes_mapping, texture_mapping
+from assets import s2_mapping, cat_mapping, conf_mapping, indexes_mapping, texture_mapping, spatial_mapping
 
 rev_cat_mapping = {v:k for k,v in cat_mapping.items()}
 rev_conf_mapping = {v:k for k,v in conf_mapping.items()}
@@ -111,6 +111,13 @@ def main(options):
         # Get patches files without _cl and _conf associated files
         patches = glob(os.path.join(options['path'], 'texture', '*/*.tif'))
         
+    elif options['type']=='spatial':
+        mapping = spatial_mapping
+        h5_prefix = 'dataset_spatial'
+        
+        # Get patches files without _cl and _conf associated files
+        patches = glob(os.path.join(options['path'], 'spatial', '*/*.tif'))
+
     else:
         raise AssertionError("Wrong Type, select between s2, indices or texture")
         
@@ -187,7 +194,7 @@ if __name__ == "__main__":
 
     # Options
     parser.add_argument('--path', default=os.path.join(root_path, 'data'), help='Path to dataset')
-    parser.add_argument('--type', default='s2', type=str, help=' Select between s2, indices or texture for Spectral Signatures, Produced Indices or GLCM Textures, respectively')
+    parser.add_argument('--type', default='s2', type=str, help=' Select between s2, indices, texture or spatial for Spectral Signatures, Produced Indices, GLCM Textures or Other Spatial Features respectively')
 
     args = parser.parse_args()
     options = vars(args)  # convert to ordinary dict
