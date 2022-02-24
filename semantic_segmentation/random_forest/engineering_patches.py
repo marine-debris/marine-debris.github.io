@@ -3,7 +3,7 @@
 Author: Ioannis Kakogeorgiou
 Email: gkakogeorgiou@gmail.com
 Python Version: 3.7.10
-Description: engineering_patches.py production of the indices or texture patches
+Description: engineering_patches.py production of patches with indices, texture or spatial features
              for the pixel-level semantic segmentation with random forest classifier.
 '''
 import os
@@ -13,6 +13,8 @@ import numpy as np
 from glob import glob
 from tqdm import tqdm
 from shutil import copyfile
+from skimage import feature
+from functools import partial
 from os.path import dirname as up
 from skimage.color import rgb2gray
 from joblib import Parallel, delayed
@@ -62,7 +64,7 @@ def bsi(band2, band4, band8, band10):
     return ((band10 + band4)-(band8 + band2))/((band10 + band4)+(band8 + band2))
 
 # GLCM properties
-def feature(matrix_coocurrence):
+def glcm_feature(matrix_coocurrence):
     contrast = greycoprops(matrix_coocurrence, 'contrast')
     dissimilarity = greycoprops(matrix_coocurrence, 'dissimilarity')
     homogeneity = greycoprops(matrix_coocurrence, 'homogeneity')
@@ -184,7 +186,7 @@ def texture(image, window_size = 13, max_value = 16):
                     # Aggregate all directions
                     matrix_coocurrence = matrix_coocurrence.mean(3)[:,:,:,np.newaxis]
 
-                    con, dis, homo, ener, cor, asm = feature(matrix_coocurrence)
+                    con, dis, homo, ener, cor, asm = glcm_feature(matrix_coocurrence)
                     features_results[row - (window_size -1)//2,col - (window_size -1)//2,0] = con
                     features_results[row - (window_size -1)//2,col - (window_size -1)//2,1] = dis
                     features_results[row - (window_size -1)//2,col - (window_size -1)//2,2] = homo
@@ -201,6 +203,55 @@ def texture(image, window_size = 13, max_value = 16):
 
         dst.update_tags(**tags)
 
+
+def spatial(image, sigma_min = 1, sigma_max = 16):
+    
+    output_path = os.path.join(up(up(up(image))),'spatial', '_'.join(os.path.basename(image).split('_')[:-1]))
+    output_image = os.path.join(output_path, os.path.basename(image).split('.')[0] + '_spatial.tif')
+    os.makedirs(output_path, exist_ok=True)
+    
+    # Copy _conf.tif and _cl.tif for seamless integration with spectral_extraction.py
+    src_conf = os.path.abspath(image.split('.tif')[0] + '_conf.tif')
+    dst_conf = os.path.join(output_path, os.path.basename(image).split('.')[0] + '_conf.tif')
+    copyfile(src_conf, dst_conf)
+    
+    src_cl = os.path.abspath(image.split('.tif')[0] + '_cl.tif')
+    dst_cl = os.path.join(output_path, os.path.basename(image).split('.')[0] + '_cl.tif')
+    copyfile(src_cl, dst_cl)
+    
+    # Read metadata of the initial image
+    with rasterio.open(image, mode ='r') as src:
+        tags = src.tags().copy()
+        meta = src.meta
+        dtype = src.read(1).dtype
+
+    # Update meta to reflect the number of layers
+    meta.update(count = 20)
+    
+    # Write it to stack
+    with rasterio.open(output_image, 'w', **meta) as dst:
+        with rasterio.open(image, mode ='r') as src:
+            img = src.read((2,3,4)).astype(dtype).copy()
+            
+            # From RGB Composite to Grayscale
+            img = np.moveaxis(img, [0, 1, 2], [2, 0, 1])
+            rgb_composite = img[:,:,[2,1,0]]
+            rgb_composite[rgb_composite<0.0]=0.0
+            rgb_composite[rgb_composite>0.15]=0.15
+            rgb_composite = (rgb_composite)/0.15
+            gray = rgb2gray(rgb_composite)
+
+            features_func = partial(feature.multiscale_basic_features,
+                                    intensity=True, edges=True, texture=True,
+                                    sigma_min=sigma_min, sigma_max=sigma_max)
+            features_results = features_func(gray).astype(dtype)
+            
+            for i in range(20):
+                dst.write_band(i+1, features_results[:,:,i])
+
+        dst.update_tags(**tags)
+
+        
 def main(options):
     patches = glob(os.path.join(options['path'], 'patches', '*/*.tif'))
     patches = [p for p in patches if ('_cl.tif' not in p) and ('_conf.tif' not in p)]
@@ -212,7 +263,11 @@ def main(options):
             
     elif options['type']=='texture':
         
-        Parallel(n_jobs=-2)(delayed(texture)(image, options['window_size'], options['max_value']) for image in tqdm(patches))
+        Parallel(n_jobs=options['n_jobs'])(delayed(texture)(image, options['window_size'], options['max_value']) for image in tqdm(patches))
+        
+    elif options['type']=='spatial':
+        
+        Parallel(n_jobs=options['n_jobs'])(delayed(spatial)(image, options['sigma_min'], options['sigma_max']) for image in tqdm(patches))
         
     else:
         raise AssertionError("Wrong Type, select indices or texture")
@@ -223,11 +278,16 @@ if __name__ == "__main__":
 
     # Options
     parser.add_argument('--path', default=os.path.join(root_path, 'data'), help='Path to dataset')
-    parser.add_argument('--type', default='indices', type=str, help=' Select between indices or texture')
+    parser.add_argument('--type', default='indices', type=str, help=' Select between indices or texture or spatial')
+    parser.add_argument('--n_jobs', default= -2, type=int, help='How many cores?')
     
     # GLCM options
     parser.add_argument('--window_size', default= 13, type=int, help='Size of the sliding window for the GLCM (use an odd number)')
     parser.add_argument('--max_value', default= 16, type=int, help=' Number of bins-levels for image quantization for the GLCM (use a power of two)')
+    
+    # Spatial options
+    parser.add_argument('--sigma_min', default= 1, type=int, help='Sigma min')
+    parser.add_argument('--sigma_max', default= 16, type=int, help='Sigma max')
 
     args = parser.parse_args()
     options = vars(args)  # convert to ordinary dict
