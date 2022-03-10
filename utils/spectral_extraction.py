@@ -21,7 +21,7 @@ from os.path import dirname as up
 root_path = up(up(os.path.abspath(__file__)))
 
 sys.path.append(os.path.join(root_path, 'utils'))
-from assets import s2_mapping, cat_mapping, conf_mapping, indexes_mapping, texture_mapping, spatial_mapping
+from assets import s2_mapping, cat_mapping, conf_mapping, indexes_mapping, texture_mapping, spatial_mapping, lbp_mapping
 
 rev_cat_mapping = {v:k for k,v in cat_mapping.items()}
 rev_conf_mapping = {v:k for k,v in conf_mapping.items()}
@@ -118,6 +118,13 @@ def main(options):
         # Get patches files without _cl and _conf associated files
         patches = glob(os.path.join(options['path'], 'spatial', '*/*.tif'))
 
+    elif options['type']=='lbp':
+        mapping = lbp_mapping
+        h5_prefix = 'dataset_lbp'
+        
+        # Get patches files without _cl and _conf associated files
+        patches = glob(os.path.join(options['path'], 'lbp', '*/*.tif'))
+
     else:
         raise AssertionError("Wrong Type, select between s2, indices or texture")
         
@@ -194,7 +201,7 @@ if __name__ == "__main__":
 
     # Options
     parser.add_argument('--path', default=os.path.join(root_path, 'data'), help='Path to dataset')
-    parser.add_argument('--type', default='s2', type=str, help=' Select between s2, indices, texture or spatial for Spectral Signatures, Produced Indices, GLCM Textures or Other Spatial Features respectively')
+    parser.add_argument('--type', default='s2', type=str, help=' Select between s2, indices, texture or spatial for Spectral Signatures, Produced Indices, GLCM Textures, LBP Textures or Other Spatial Features respectively')
 
     args = parser.parse_args()
     options = vars(args)  # convert to ordinary dict

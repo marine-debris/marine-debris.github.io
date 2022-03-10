@@ -96,6 +96,11 @@ texture_mapping = {'CON': 0,
                    'Confidence': 6,
                    'Class': 7}
 
+lbp_mapping = { 'LBP': 0, 
+                'LBP_UNI': 1,
+                'Confidence': 2,
+                'Class': 3}
+
 spatial_mapping = {'f1': 0, 
                    'f2': 1, 
                    'f3': 2, 
