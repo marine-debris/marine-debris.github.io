@@ -11,6 +11,9 @@ Publication:
 
 In order to download MARIDA go to https://doi.org/10.5281/zenodo.5151941.
 
+Alternatively, MARIDA can be downloaded from the [Radiant MLHub](https://mlhub.earth/data/marida_v1). The `tar.gz` archive file downloaded from this source includes the STAC catalog associated with this dataset.
+
+
 ## Contents
 
 - [Installation](#installation)
