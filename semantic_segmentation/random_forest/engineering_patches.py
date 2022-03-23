@@ -312,7 +312,7 @@ def main(options):
         
     elif options['type']=='spatial':
         
-        Parallel(n_jobs=options['n_jobs'])(delayed(spatial)(image, options['sigma_min'], options['sigma_max']) for image in tqdm(patches))
+        Parallel(n_jobs=options['n_jobs'])(delayed(spatial)(image, 1, 16) for image in tqdm(patches))
     
     elif options['type']=='lbp':
         
@@ -333,10 +333,6 @@ if __name__ == "__main__":
     # GLCM options
     parser.add_argument('--window_size', default= 13, type=int, help='Size of the sliding window for the GLCM (use an odd number)')
     parser.add_argument('--max_value', default= 16, type=int, help=' Number of bins-levels for image quantization for the GLCM (use a power of two)')
-    
-    # Spatial options
-    parser.add_argument('--sigma_min', default= 1, type=int, help='Sigma min')
-    parser.add_argument('--sigma_max', default= 16, type=int, help='Sigma max')
 
     # LBP options
     parser.add_argument('--radius', default= 3, type=int, help='Radius of circle (spatial resolution of the operator)')
